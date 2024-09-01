@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            color: #fff;
+            overflow: hidden; /* Prevents scroll bars */
+        }
+
+        /* Video background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Places the video behind the content */
+        }
+
+        /* Content overlay */
+        .content-overlay {
+            position: relative;
+            z-index: 1; /* Ensures content is above the video */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        nav {
+            font-size: 20px;
+            text-decoration: underline #007bff;
+            color: #fff;;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px);
+        }
+
+        .content {
+            text-align: center;
+            text-decoration: 10px solid black;
+            /* text-align: center; */
+        }
+
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .social-links a i {
+            font-size: 18px;
+        }
+        .content p{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video background -->
+    <video class="video-bg" autoplay muted loop>
+        <source src="static/videos/vedio1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Content overlay -->
+    <div class="content-overlay">
+        <header>
+            <div class="logo">FlexTrip</div>
+            <nav>
+                <a href="/about">About</a>
+                <a href="/service">Services</a>
+            </nav>
+            <div>
+                <a href="{{ url_for('login') }}" class="btn">Log In</a>
+                <a href="{{ url_for('register') }}" class="btn">Sign Up</a>
+            </div>
+        </header>
+
+        <div class="container" >
+            <div class="content" style="color: #000; text-align: center;">
+                <h1>Turning Dreams into Destinations, Every Single Day.</h1>
+                <p>Let FlexTrip guide you to your ideal travel destination! Discover curated experiences that match your style and budget. Adventure, unwind, or explore new cultures—it's all here!</p>
+            </div>
+        </div>
+
+        <footer>
+            <div class="social-links">
+                <p>&copy; TRAVEL EVERYWHERE</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

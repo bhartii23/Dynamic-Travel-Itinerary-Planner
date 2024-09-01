@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Website - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; /* Ensures consistent box model */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #b5d1ee;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Prevent scrolling while animations are active */
+        }
+
+        /* Header Styles */
+        #header {
+            width: 100%;
+            background-color:#4c91af;
+            padding: 10px 0;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            position: fixed; /* Fixed positioning to stay at the top */
+            top: 0; /* Move the header to the top of the viewport */
+            z-index: 1000; /* Stays above other elements */
+            transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out; /* Smooth transition */
+        }
+
+        /* Adjust body padding to prevent overlap with fixed header */
+        body {
+            padding-top: 60px; /* Matches header height to avoid overlap */
+        }
+
+        .login-container {
+            background-color: #d5dedc;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            opacity: 0; /* Initially invisible */
+            transform: translateY(50%); /* Initially below the viewport */
+            transition: opacity 1s ease-out, transform 1s ease-out; /* Smooth transition */
+        }
+
+        .login-container.visible {
+            opacity: 1;
+            transform: translateY(0); /* Move to its normal position */
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-form label {
+            text-align: left;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .login-form input {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .login-form button {
+            padding: 12px;
+            background-color:  #1e5b91;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover {
+            background-color: #45a049;
+        }
+
+        .login-form .options {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        .login-form .options a {
+            color: #0e110e;
+            text-decoration: none;
+        }
+
+        .login-form .options a:hover {
+            text-decoration: underline;
+        }
+
+        /* Social Login Styles */
+        .social-login {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .social-login button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-login button img {
+            width: 20px;
+        }
+
+        .social-login button.google {
+            background-color: #db4437;
+            color: white;
+        }
+
+        .social-login button:hover {
+            opacity: 0.9;
+        }
+
+        /* Footer Styles */
+        footer {
+            width: 100%;
+            background-color:  #4c91af;
+            padding: 10px 0;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .btn-97 {
+            background: #fff;
+            border: 1px solid;
+            border-radius: 999px;
+            color: #000;
+            display: block;
+            font-weight: 900;
+            padding: 1.2rem 3rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .btn-97:hover {
+            box-shadow: 0 6px 0 -4px #fff, 0 9px 0 -4px #aaa, 0 12px 0 -4px #000;
+            transform: translateY(-2px);
+        }
+
+        /* Error message style */
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header id="header">
+        <h1>FlexTrip</h1>
+    </header>
+
+    <!-- Login Container Section -->
+    <div class="login-container" id="login-container">
+        <h2>Login to Your Account</h2>
+        <!-- Display error messages if any -->
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+        <form class="login-form" action="/login" method="POST">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="username" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <div class="options">
+                <!-- <a href="#">Forgot Password?</a> -->
+                <a href="/register">Create an Account</a>
+            </div>
+
+            <button type="submit" class="btn-97">Login</button>
+        </form>
+
+        <!-- <div class="social-login">
+            <button class="google"><img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google"/> Google</button>
+        </div> -->
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        &copy; 2024 FlexTrip.com. All rights reserved.
+    </footer>
+
+    <script>
+        // Show login container with animation
+        window.addEventListener('load', () => {
+            const loginContainer = document.getElementById('login-container');
+            setTimeout(() => {
+                loginContainer.classList.add('visible');
+            }, 500); // Adjust delay as needed
+        });
+    </script>
+
+</body>
+</html>

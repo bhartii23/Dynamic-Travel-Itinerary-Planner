@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - City Weather</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #283e51;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            color: #ffcb05;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f7e03c;
+        }
+
+        /* Main Section */
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-out;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #283e51;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffcb05;
+            padding-bottom: 10px;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #283e51;
+        }
+
+        form input[type="number"] {
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        form input[type="number"]:focus {
+            border-color: #ffcb05;
+            outline: none;
+        }
+
+        form button {
+            padding: 12px;
+            background-color: #ffcb05;
+            color: #283e51;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #f7e03c;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            transition: background-color 0.3s ease;
+        }
+
+        th {
+            background-color: #283e51;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        td:hover {
+            background-color: #e0eafc;
+        }
+
+        td ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        td ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.5rem;
+                padding: 15px;
+            }
+
+            nav ul li {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            form {
+                max-width: 100%;
+                padding: 15px;
+            }
+
+            table, th, td {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FLEXTRIP Suggestion Dashboard</h1>
+        <nav>
+            <ul>
+                <!-- <li><a href="{{ url_for('home') }}">Home</a></li> -->
+                <!-- <li><a href="{{ url_for('login') }}">Login</a></li> -->
+                <!-- <li><a href="{{ url_for('register') }}">Register</a></li> -->
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Enter Your Budget</h2>
+            <form action="{{ url_for('dashboard') }}" method="POST">
+                <label for="budget">Your Budget:</label>
+                <input type="number" id="budget" name="budget" required>
+                <button type="submit">Get Recommendations</button>
+            </form>
+        </section>
+
+        {% if recommendations %}
+        <section>
+            <h2>City Recommendations</h2>
+            {% if recommendations %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>City</th>
+                        <th>Temperature (°C)</th>
+                        <th>Humidity (%)</th>
+                        <th>Wind Speed (m/s)</th>
+                        <th>Available Packages</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for city in recommendations %}
+                    <tr>
+                        <td>{{ city.city }}</td>
+                        <td>{{ city.temperature }}</td>
+                        <td>{{ city.humidity }}</td>
+                        <td>{{ city.wind_speed }}</td>
+                        <td>
+                            <ul>
+                                {% for pkg, price in city.packages.items() %}
+                                <li>{{ pkg | capitalize }} Package: ₹{{ price }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No cities match your budget.</p>
+            {% endif %}
+        </section>
+        {% endif %}
+
+        <!-- Itinerary and Expense Tracking -->
+        <section>
+            <h2>Travel Itinerary and Expense Tracking</h2>
+            <p>Track your travel expenses and adjust your itinerary based on your budget.</p>
+            <!-- This is a placeholder. You should integrate a more complex system or plugin if needed. -->
+            <form action="#" method="POST">
+                <label for="itinerary">Adjust Your Itinerary:</label>
+                <textarea id="itinerary" name="itinerary" rows="4" placeholder="Enter your adjusted itinerary here..."></textarea>
+                
+                <label for="expenses">Track Your Expenses:</label>
+                <input type="number" id="expenses" name="expenses" placeholder="Enter total expenses">
+                
+                <button type="submit">Save and Track</button>
+            </form>
+        </section>
+
+        <!-- Social Sharing -->
+        <section>
+            <h2>Share Your Trip</h2>
+            <p>Share your travel plans with friends and family:</p>
+            <button onclick="shareOnSocialMedia()" style="background: linear-gradient(to right, #87CEEB, #00BFFF); cursor: pointer; padding: 15px 30px; font-size: 1.2rem; display: block; margin: 0 auto;">Share on Social Media</button>
+        </section>
+
+    </main>
+
+    <script>
+        function shareOnSocialMedia() {
+            // This function is a placeholder for social sharing functionality.
+            // You can integrate with social media APIs here.
+            alert('Sharing functionality is not implemented yet.');
+        }
+    </script>
+</body>
+</html>
